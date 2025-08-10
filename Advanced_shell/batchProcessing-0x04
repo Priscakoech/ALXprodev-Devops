@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Array of Pokémon to fetch
-pokemon=("pikachu" "bulbasaur" "charmander")
+# Fetch Pokémon data in parallel
+curl -s "https://pokeapi.co/api/v2/pokemon/pikachu" -o pikachu.json &
+curl -s "https://pokeapi.co/api/v2/pokemon/charmander" -o charmander.json &
+curl -s "https://pokeapi.co/api/v2/pokemon/bulbasaur" -o bulbasaur.json &
 
-for p in "${pokemon[@]}"; do
-    curl -s "https://pokeapi.co/api/v2/pokemon/$p" -o "$p.json" &
-done
+# List background jobs
+jobs
 
-# Wait for all background processes to finish
+# Wait for all background jobs to finish
 wait
 
-echo "All Pokémon data fetched."

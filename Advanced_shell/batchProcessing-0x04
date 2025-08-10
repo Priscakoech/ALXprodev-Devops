@@ -11,3 +11,4 @@ jobs
 # Wait for all background jobs to finish
 wait
 
+kill $!

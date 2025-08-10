@@ -1,17 +1,13 @@
 #!/bin/bash
-mkdir -p pokemon_data
-pokemon_list=("bulbasaur" "ivysaur" "venusaur" "charmander" "charmeleon")
 
-for p in "${pokemon_list[@]}"; do
-    (
-        echo "Fetching data for $p..."
-        if curl -s "https://pokeapi.co/api/v2/pokemon/$p" -o "pokemon_data/$p.json"; then
-            echo "Saved data to pokemon_data/$p.json ✅"
-        else
-            echo "Error fetching $p" >> errors.txt
-        fi
-    ) &
+# Array of Pokémon to fetch
+pokemon=("pikachu" "bulbasaur" "charmander")
+
+for p in "${pokemon[@]}"; do
+    curl -s "https://pokeapi.co/api/v2/pokemon/$p" -o "$p.json" &
 done
 
+# Wait for all background processes to finish
 wait
-echo "All Pokémon data fetched in parallel ✅"
+
+echo "All Pokémon data fetched."
